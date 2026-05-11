@@ -83,3 +83,4 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 
 ## 💻 Tecnologias
 * **Banco de Dados:** PostgreSQL
+* **Back-End:** Flask Python
