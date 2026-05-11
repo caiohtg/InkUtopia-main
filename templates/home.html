@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InkUtopia</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <main>
+        <header class="site-header">
+            <div class="header-container">
+                <!-- Logo do lado esquerdo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="../static/img/inkutopia_logo.png" alt="Logo do Site" width="150">
+                    </a>
+                </div>
+        
+                <!-- Navegação central -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="{{ url_for('exibir_home') }}">Home</a></li>
+                        <li><a href="{{ url_for('exibir_catalogo') }}">Catálogo</a></li>
+                        <li><a href="{{ url_for('exibir_ideias') }}">Ideias</a></li>
+                        <li><a href="{{ url_for('exibir_sobre') }}">Sobre</a></li>
+                    </ul>
+                </nav>
+        
+                <!-- Lado direito com pesquisa e navegação adicional -->
+                <div class="header-right">
+                    <!-- Navigation bar do lado direito -->
+                    <nav class="right-navigation">
+                        <ul>
+                            <!-- <li><a href="../templates/login.html" class="nav-entrar-button">Entrar</a></li> -->
+                            {% if session.get('id_usuario') %}
+                                <a href="{{ url_for('perfil') }}" style="color: #000000;">Meu Perfil</a>
+                            {% else %}
+                                <a href="{{ url_for('exibir_login') }}">Entrar</a>
+                                <a href="{{ url_for('exibir_cadastro') }}">Cadastrar</a>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO BANNER -->
+
+        <section class="hero-banner">
+            <div class="hero-slider">
+                <!-- Slide 1 -->
+                <div class="slide active">
+                    <div class="slide-image">
+                        <img src="https://plus.unsplash.com/premium_photo-1707674004083-ca21b6aaca38?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGF0dWFnZW5zfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000" alt="Coleção de Verão">
+                    </div>
+                    <div class="slide-content">
+                        <h1></h1>
+                        <p></p>
+                        <a href="{{ url_for('exibir_catalogo') }}" class="cta-button">Ver Catálogo</a>
+                    </div>
+                </div>
+        
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <div class="slide-image">
+                        <img src="https://i0.wp.com/modamasculinajournal.com.br/wp-content/uploads/2017/12/Unknown-2.jpeg?fit=1000%2C500&ssl=1" alt="Ideias Criativas">
+                    </div>
+                    <div class="slide-content">
+                        <h1></h1>
+                        <p></p>
+                        <a href="{{ url_for('exibir_ideias') }}" class="cta-button">Explorar Ideias</a>
+                    </div>
+                </div>
+        
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <div class="slide-image">
+                        <img src="https://blog.voraxacessorios.com.br/wp-content/uploads/2022/03/356_10estilosdetatuagensmasculinasconheaoseu.jpg" alt="Sobre Nós">
+                    </div>
+                    <div class="slide-content">
+                        <h1></h1>
+                        <p></p>
+                        <a href="{{ url_for('exibir_sobre') }}" class="cta-button">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Controles de navegação -->
+            <button class="slide-nav prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="slide-nav next" onclick="changeSlide(1)">&#10095;</button>
+        
+            <!-- Indicadores de slide -->
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="currentSlide(1)"></span>
+                <span class="indicator" onclick="currentSlide(2)"></span>
+                <span class="indicator" onclick="currentSlide(3)"></span>
+            </div>
+        </section>
+        
+        <!-- Encontre seu artista -->
+
+        <section class="artists-section">
+            <div class="section-header">
+                <h1>ENCONTRE SEU ARTISTA.</h1>
+            </div>
+            
+            <div class="artists-grid">
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Rodrigo" class="artist-image">
+                    <div class="artist-name">Rodrigo</div>
+                    <div class="artist-role">Tatuador(a)</div>
+                </div>
+                
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Eduardo" class="artist-image">
+                    <div class="artist-name">Eduardo</div>
+                    <div class="artist-role">Tatuador(a)</div>
+                </div>
+                
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Julia" class="artist-image">
+                    <div class="artist-name">Julia</div>
+                    <div class="artist-role">Tatuador(a)</div>
+                </div>
+                
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Radical" class="artist-image">
+                    <div class="artist-name">Radical</div>
+                    <div class="artist-role">Estúdio</div>
+                </div>
+            </div>
+
+            <div class="conheca-as-opcoes-button">
+                <a href="{{ url_for('exibir_catalogo') }}" class="cta-button">
+                    Artistas
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+        </section>
+        
+        <div class="divider"></div>
+
+        <!-- Reuna ideias -->
+
+        <section class="ideas-section">
+            <div class="image-container">
+                <img src="../static/img/tatuagem-feminina-na-coxa-catrinatattoo-estudio-de-tatuagem-zona-leste-flores-1024x585.webp" alt="Ideias criativas para tatuagens" class="main-image">
+            </div>
+            
+            <div class="content-container">
+                <h2 class="section-title">REÚNA IDEIAS</h2>
+                <p class="section-description">
+                    Explore nossa galeria de inspiração com milhares de designs, estilos e conceitos. 
+                    Encontre a perfeita combinação entre sua visão e a expertise dos nossos artistas.
+                </p>
+                
+                <a href="{{ url_for('exibir_ideias') }}" class="cta-button">
+                    Ideias
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Sobre -->
+
+        <section class="sobre-section">
+            <div sobre-content-container>
+                <h2 class="section-title">SOBRE O PROJETO</h2>
+            </div>
+
+            <div class="sobre-image-container">
+                <img src="../static/img/estudio-img.webp" alt="Estudio de tatuagem" class="sobre-image">
+            </div>
+
+            <div class="conheca-as-opcoes-button">
+                <a href="{{ url_for('exibir_sobre') }}" class="cta-button">
+                    Sobre
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Footer -->
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="../static/img/inkutopia_logo.png" alt="Logo do Site" width="150">
+                        </a>
+                    </div>
+                </div>
+                    <!-- <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div> -->
+                </div>
+    
+                <div class="footer-links">
+                    <div class="link-column">
+                        <h3>Ajuda</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-question-circle"></i> Entre em contato</a></li>
+                            <li><a href="#"><i class="fas fa-user-plus"></i> Junte-se a nós</a></li>
+                            <li><a href="#"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="link-column">
+                        <h3>FAQ</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-file-contract"></i> Termos de uso</a></li>
+                            <li><a href="#"><i class="fas fa-shield-alt"></i> Privacidade</a></li>
+                            <li><a href="#"><i class="fas fa-clipboard-list"></i> Termos de serviço</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="link-column">
+                        <h3>Contato</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Brasília - DF</a></li>
+                            <li><a href="#"><i class="fas fa-envelope"></i> Ink@example.com</a></li>
+                            <li><a href="#"><i class="fas fa-phone"></i> +55 61 99876 4560</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ink.Utopia Tattoo. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+        <style>
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        footer {
+            padding: 3rem 2rem 2rem;
+            background-color: #ffffff;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-subtitle {
+            font-size: 1rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff6b6b;
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            flex: 2;
+        }
+
+        .link-column {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .link-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #000000;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .link-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #494949;
+        }
+
+        .link-column ul {
+            list-style: none;
+        }
+
+        .link-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .link-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .link-column ul li a:hover {
+            color: #000000;
+            padding-left: 5px;
+        }
+
+        .link-column ul li a i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                width: 100%;
+            }
+            
+            .link-column {
+                min-width: 100%;
+            }
+        }
+        </style>
+
+
+
+
+
+
+
+
+
+
+        
+        <script>
+            let currentSlideIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+        
+            // Inicializar o slideshow
+            function initSlider() {
+                showSlide(currentSlideIndex);
+                
+                // Auto-play a cada 5 segundos
+                setInterval(() => {
+                    changeSlide(1);
+                }, 5000);
+            }
+        
+            function showSlide(index) {
+                // Esconder todos os slides
+                slides.forEach(slide => slide.classList.remove('active'));
+                indicators.forEach(indicator => indicator.classList.remove('active'));
+                
+                // Mostrar slide atual
+                slides[index].classList.add('active');
+                indicators[index].classList.add('active');
+                
+                currentSlideIndex = index;
+            }
+        
+            function changeSlide(direction) {
+                let newIndex = currentSlideIndex + direction;
+                
+                if (newIndex < 0) {
+                    newIndex = slides.length - 1;
+                } else if (newIndex >= slides.length) {
+                    newIndex = 0;
+                }
+                
+                showSlide(newIndex);
+            }
+        
+            function currentSlide(index) {
+                showSlide(index - 1);
+            }
+        
+            // Iniciar o slider quando a página carregar
+            document.addEventListener('DOMContentLoaded', initSlider);
+        </script>
+    </main>
+</body>
+</html>

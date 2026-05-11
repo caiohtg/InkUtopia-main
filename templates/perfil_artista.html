@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil - InkUtopia</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+        <main>
+        <header class="site-header">
+            <div class="header-container">
+                <!-- Logo do lado esquerdo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="../static/img/inkutopia_logo.png" alt="Logo do Site" width="150">
+                    </a>
+                </div>
+        
+                <!-- Navegação central -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('exibir_catalogo') }}">Catálogo</a></li>
+                        <li><a href="{{ url_for('exibir_ideias') }}">Ideias</a></li>
+                        <li><a href="{{ url_for('exibir_sobre') }}">Sobre</a></li>
+                    </ul>
+                </nav>
+        
+                <!-- Lado direito com pesquisa e navegação adicional -->
+                <div class="header-right">
+                    <!-- Navigation bar do lado direito -->
+                    <nav class="right-navigation">
+                        <ul>
+                            <!-- <li><a href="../templates/login.html" class="nav-entrar-button">Entrar</a></li> -->
+                            <li><a href="{{ url_for('home') }}" style="color: black;">Voltar para Home</a></li> 
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header><br>
+        <div class="perfil-wrapper" style="padding-top: 80px;">
+        <div class="profile-card artist-card">
+            <div class="profile-header">
+                <span class="badge-artista">{{ usuario.tipo }}</span>
+                <h2>Artista: {{ usuario.nome }}</h2>
+            </div>
+
+            <div class="profile-info">
+                <div class="info-group">
+                    <label>E-mail Profissional</label>
+                    <p>{{ usuario.email }}</p>
+                </div>
+                
+                <div class="info-group">
+                    <label>Telefone de Contato</label>
+                    <p>{{ usuario.telefone }}</p>
+                </div>
+            </div>
+
+            <div class="artist-tools">
+                <h3>Gerenciamento</h3>
+                <div class="tools-grid">
+                    <a href="#" class="tool-btn">
+                        <i>🎨</i> Novo Portfólio
+                    </a>
+                    <a href="#" class="tool-btn">
+                        <i>📅</i> Verificar Agenda
+                    </a>
+                    <a href="#" class="tool-btn">
+                        <i>💬</i> Ver Mensagens
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <a href="#" class="btn-edit-artist">Editar Perfil Artístico</a>
+                <a href="{{ url_for('home') }}" class="btn-back">Voltar para Home</a>
+            </div>
+
+                        <div class="profile-actions">
+                <a href="#" class="btn-edit">Editar Meus Dados</a>
+                <a href="{{ url_for('home') }}" style="color: #95a5a6; text-decoration: none; font-size: 0.9rem;">Voltar para Home</a>
+            </div>
+
+            <div class="test-zone">
+                <hr>
+                <a href="{{ url_for('logout') }}" class="btn-logout-test">
+                    🚪 Sair da Conta (Logout)
+                </a>
+        </div>
+    </div>
+    </main>
+
+
+    <style>
+        
+    </style>
+</body>
+</html>

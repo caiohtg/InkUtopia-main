@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InkUtopia - Catálogo</title>
+    
+    <!-- CSS: ../ para voltar uma pasta -->
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <main>
+        <!-- HEADER -->
+        <header class="site-header">
+            <div class="header-container">
+                <!-- Logo -->
+                <div class="logo">
+                    <!-- ../ para voltar uma pasta -->
+                    <a href="../index.html">
+                        <img src="../static/img/inkutopia_logo.png" alt="Logo InkUtopia" width="150">
+                    </a>
+                </div>
+        
+                <!-- Navegação -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('exibir_catalogo') }}">Catálogo</a></li>
+                        <li><a href="{{ url_for('exibir_ideias') }}">Ideias</a></li>
+                        <li><a href="{{ url_for('exibir_sobre') }}">Sobre</a></li>
+                    </ul>
+                </nav>
+        
+                <!-- Lado direito -->
+                <div class="header-right">
+                    <!-- Navigation bar do lado direito -->
+                    <nav class="right-navigation">
+                        <ul>
+                            <!-- <li><a href="../login.html" class="nav-entrar-button">Entrar</a></li>
+                            <li><a href="../cadastrar.html" class="nav-cadastrar-button">Cadastrar</a></li> -->
+                            {% if session.get('id_usuario') %}
+                                <a href="{{ url_for('perfil') }}" style="color: #000000;">Meu Perfil</a>
+                            {% else %}
+                                <a href="{{ url_for('exibir_login') }}" style="color: #0000;">Entrar</a>
+                                <a href="{{ url_for('exibir_cadastro') }}" style="color: #0000;">Cadastrar</a>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== SEÇÃO DO CATÁLOGO ===== -->
+        <section class="catalog-section">
+            <div class="section-header">
+                <h1>ENCONTRE SEU ARTISTA.</h1>
+                <p>Já tem um artista favorito?</p>
+            </div>
+            
+            <!-- Filtros e busca -->
+            <div class="filters">
+                <div class="search-box">
+                    <input type="text" placeholder="Pesquisar artistas ou estúdios...">
+                </div>
+                <div class="filter-options">
+                    <select class="filter-select">
+                        <option value="">Todos os tipos</option>
+                        <option value="estudio">Estúdio</option>
+                        <option value="artista">Artista</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Ordenar por</option>
+                        <option value="distancia">Distância</option>
+                        <option value="avaliacao">Avaliação</option>
+                        <option value="nome">Nome</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Grid de artistas -->
+            <div class="artists-grid" id="artistsGrid">
+                <!-- Os cards serão inseridos aqui via JavaScript -->
+            </div>
+            
+            <!-- Paginação -->
+            <div class="pagination">
+                <div class="pagination-info" id="paginationInfo">PÁGINA 1 | DE 49</div>
+                <div class="pagination-controls">
+                    <button class="page-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <div>
+                <h1>Catálogo de Tatuagens</h1>
+                <p>Explore nossa coleção exclusiva de designs de tatuagens. Encontre inspiração para sua próxima obra de arte corporal!</p>
+            </div> 
+        </div>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <a href="../index.html">
+                            <img src="../static/img/inkutopia_logo.png" alt="Logo InkUtopia" width="150">
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="footer-links">
+                    <!-- ... links ... -->
+                </div>
+            </div>
+    
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ink.Utopia Tattoo. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+        <!-- ===== ESTILOS CSS ===== -->
+        <style>
+            /* ===== RESET E ESTILOS GERAIS ===== */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            /* ===== ESTILOS DO CONTEÚDO ===== */
+            .content {
+                flex: 1;
+                padding: 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .content h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: #757575;
+            }
+
+            .content p {
+                font-size: 1.2rem;
+                max-width: 600px;
+                line-height: 1.6;
+            }
+
+            /* ===== ESTILOS DO FOOTER ===== */
+            footer {
+                padding: 3rem 2rem 2rem;
+            }
+
+            .footer-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 2rem;
+            }
+
+            .footer-logo {
+                flex: 1;
+                min-width: 250px;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(135deg, #ffffff, #ffffff);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 15px;
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(to right, #757575, #5a5a5a);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .logo-subtitle {
+                font-size: 1rem;
+                color: #ccc;
+                margin-top: 5px;
+            }
+
+            .social-icons {
+                display: flex;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .social-icons a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                background-color: #333;
+                border-radius: 50%;
+                color: #fff;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+            .social-icons a:hover {
+                background-color: #757575;
+                transform: translateY(-3px);
+            }
+
+            .footer-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+                flex: 2;
+            }
+
+            .link-column {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .link-column h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+                color: #000000;
+                position: relative;
+                padding-bottom: 8px;
+            }
+
+            .link-column h3::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 30px;
+                height: 2px;
+                background-color: #494949;
+            }
+
+            .link-column ul {
+                list-style: none;
+            }
+
+            .link-column ul li {
+                margin-bottom: 0.8rem;
+            }
+
+            .link-column ul li a {
+                color: #ccc;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                display: flex;
+                align-items: center;
+            }
+
+            .link-column ul li a:hover {
+                color: #000000;
+                padding-left: 5px;
+            }
+
+            .link-column ul li a i {
+                margin-right: 8px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .footer-bottom {
+                max-width: 1200px;
+                margin: 2rem auto 0;
+                padding-top: 1.5rem;
+                border-top: 1px solid #333;
+                text-align: center;
+                color: #999;
+                font-size: 0.9rem;
+            }
+
+            /* ===== ESTILOS RESPONSIVOS ===== */
+            @media (max-width: 768px) {
+                .footer-container {
+                    flex-direction: column;
+                }
+                
+                .footer-links {
+                    width: 100%;
+                }
+                
+                .link-column {
+                    min-width: 100%;
+                }
+            }
+
+            /* ===== ESTILOS DO CATÁLOGO ===== */
+            .catalog-section {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem 1rem;
+            }
+
+            .section-header {
+                text-align: center;
+                margin-bottom: 2rem;
+                margin-top: 5rem;
+            }
+
+            .section-header h1 {
+                font-size: 2.5rem;
+                color: #222;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-header p {
+                font-size: 1.2rem;
+                color: #666;
+            }
+
+            /* Filtros */
+            .filters {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 2rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .search-box {
+                flex: 1;
+                min-width: 300px;
+                position: relative;
+            }
+
+            .search-box input {
+                width: 100%;
+                padding: 12px 20px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                font-size: 1rem;
+                outline: none;
+                transition: border-color 0.3s;
+            }
+
+            .search-box input:focus {
+                border-color: #333;
+            }
+
+            .filter-options {
+                display: flex;
+                gap: 1rem;
+            }
+
+            .filter-select {
+                padding: 12px 20px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                background-color: white;
+                cursor: pointer;
+                outline: none;
+                transition: border-color 0.3s;
+            }
+
+            .filter-select:focus {
+                border-color: #333;
+            }
+
+            /* Grid de artistas */
+            .artists-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .artist-card {
+                background-color: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            .artist-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .artist-image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+
+            .artist-info {
+                padding: 1.5rem;
+            }
+
+            .artist-name {
+                font-size: 1.3rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                color: #222;
+            }
+
+            .artist-details {
+                display: flex;
+                justify-content: space-between;
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .artist-rating {
+                color: #ffc107;
+            }
+
+            .artist-description {
+                color: #777;
+                line-height: 1.5;
+                margin-bottom: 1.5rem;
+            }
+
+            .artist-actions {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                border-radius: 30px;
+                border: none;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .btn-primary {
+                background-color: #333;
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background-color: #333;
+            }
+
+            .btn-outline {
+                background-color: transparent;
+                border: 1px solid #333;
+                color: #333;
+            }
+
+            .btn-outline:hover {
+                background-color: #333;
+                color: white;
+            }
+
+            /* Paginação */
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 2rem;
+                gap: 1rem;
+            }
+
+            .pagination-info {
+                color: #666;
+                font-size: 0.9rem;
+            }
+
+            .pagination-controls {
+                display: flex;
+                gap: 0.5rem;
+            }
+
+            .page-btn {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+                background-color: white;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .page-btn:hover {
+                background-color: #f0f0f0;
+            }
+
+            .page-btn.active {
+                background-color: #333;
+                color: white;
+                border-color: #333;
+            }
+
+            /* Responsividade do catálogo */
+            @media (max-width: 768px) {
+                .filters {
+                    flex-direction: column;
+                }
+                
+                .search-box {
+                    min-width: 100%;
+                }
+                
+                .filter-options {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+                
+                .artists-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                }
+            }
+
+            @media (max-width: 480px) {
+                .artists-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .artist-actions {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+                
+                .btn {
+                    width: 100%;
+                }
+            }
+        </style>
+    </main>
+
+    <!-- ===== SCRIPTS JAVASCRIPT ===== -->
+    <script>
+        // ===== DADOS DOS ARTISTAS =====
+        // Array com informações dos artistas/estúdios (simulando dados do backend)
+        const artistsData = [
+            {
+                id: 1,
+                name: "Fydi Studio",
+                rating: 49,
+                type: "Estúdio",
+                distance: "1.1 Km",
+                image: "https://images.pexels.com/photos/3657559/pexels-photo-3657559.jpeg",
+                description: "Estúdio especializado em tatuagens realistas e geométricas."
+            },
+            {
+                id: 2,
+                name: "Utopia Studio",
+                rating: 43,
+                type: "Estúdio",
+                distance: "3 Km",
+                image: "https://images.pexels.com/photos/2246741/pexels-photo-2246741.jpeg",
+                description: "Ambiente acolhedor com foco em tatuagens coloridas e aquarela."
+            },
+            {
+                id: 3,
+                name: "Jorge Tattoo",
+                rating: 47,
+                type: "Artista",
+                distance: "1.5 Km",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Especialista em tatuagens old school e tradicionais."
+            },
+            {
+                id: 4,
+                name: "Emerson Silva Tattoo",
+                rating: 45,
+                type: "Artista",
+                distance: "2 Km",
+                image: "https://images.pexels.com/photos/1803878/pexels-photo-1803878.jpeg",
+                description: "Foco em tatuagens minimalistas e lettering."
+            },
+            {
+                id: 5,
+                name: "Jojo Studio",
+                rating: 48,
+                type: "Estúdio",
+                distance: "1.7 Km",
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Estúdio com múltiplos artistas especializados em diversos estilos."
+            },
+            {
+                id: 6,
+                name: "Tattoo Studio",
+                rating: 45,
+                type: "Estúdio",
+                distance: "3.4 Km",
+                image: "https://images.pexels.com/photos/35029626/pexels-photo-35029626.jpeg",
+                description: "Estúdio moderno com equipamentos de última geração."
+            },
+            {
+                id: 7,
+                name: "Caio Tattoo",
+                rating: 49,
+                type: "Artista",
+                distance: "4 Km",
+                image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Artista premiado com foco em retratos e realismo."
+            },
+            {
+                id: 8,
+                name: "Gago Ink",
+                rating: 49,
+                type: "Artista",
+                distance: "2.3 Km",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Especialista em tatuagens tribais e geométricas."
+            }
+        ];
+
+        // ===== ELEMENTOS DOM =====
+        // Seleção dos elementos HTML que serão manipulados
+        const artistsGrid = document.getElementById('artistsGrid');
+        const paginationInfo = document.getElementById('paginationInfo');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const searchInput = document.querySelector('.search-box input');
+        const typeFilter = document.querySelector('.filter-select');
+        const sortFilter = document.querySelectorAll('.filter-select')[1];
+
+        // ===== ESTADO DA APLICAÇÃO =====
+        // Variáveis que controlam o estado da página
+        let currentPage = 1;
+        const itemsPerPage = 8;
+        let filteredArtists = [...artistsData];
+
+        // ===== FUNÇÕES PRINCIPAIS =====
+
+        /**
+         * Renderiza os artistas na página
+         * Cria os cards dos artistas e atualiza a paginação
+         */
+        function renderArtists() {
+            // Limpa o grid de artistas
+            artistsGrid.innerHTML = '';
+            
+            // Calcula quais artistas mostrar na página atual
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const artistsToShow = filteredArtists.slice(startIndex, endIndex);
+            
+            // Se não há artistas para mostrar, exibe mensagem
+            if (artistsToShow.length === 0) {
+                artistsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem;">Nenhum artista encontrado.</p>';
+                return;
+            }
+            
+            // Cria um card para cada artista
+            artistsToShow.forEach(artist => {
+                const card = document.createElement('div');
+                card.className = 'artist-card';
+                
+                // HTML do card do artista
+                card.innerHTML = `
+                    <img src="${artist.image}" alt="${artist.name}" class="artist-image">
+                    <div class="artist-info">
+                        <h3 class="artist-name">${artist.name}</h3>
+                        <div class="artist-details">
+                            <span class="artist-rating">${artist.rating} ★</span>
+                            <span>${artist.type}</span>
+                            <span>${artist.distance}</span>
+                        </div>
+                        <p class="artist-description">${artist.description}</p>
+                        <div class="artist-actions">
+                            <button class="btn btn-primary">Ver Portfólio</button>
+                            <button class="btn btn-outline">Agendar</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Adiciona o card ao grid
+                artistsGrid.appendChild(card);
+            });
+            
+            // Atualiza informações de paginação
+            const totalPages = Math.ceil(filteredArtists.length / itemsPerPage);
+            paginationInfo.textContent = `PÁGINA ${currentPage} | DE ${totalPages}`;
+            
+            // Atualiza controles de paginação
+            updatePaginationControls(totalPages);
+        }
+
+        /**
+         * Atualiza os controles de paginação
+         * @param {number} totalPages - Total de páginas disponíveis
+         */
+        function updatePaginationControls(totalPages) {
+            const paginationControls = document.querySelector('.pagination-controls');
+            
+            // Remove botões de página existentes (exceto navegação)
+            const pageBtns = paginationControls.querySelectorAll('.page-btn:not(#prevPage):not(#nextPage)');
+            pageBtns.forEach(btn => btn.remove());
+            
+            // Cria botões para cada página
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderArtists();
+                });
+                
+                // Insere o botão antes do botão "próxima página"
+                paginationControls.insertBefore(pageBtn, nextPageBtn);
+            }
+            
+            // Atualiza estado dos botões de navegação
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+        }
+
+        /**
+         * Filtra e ordena os artistas com base nos critérios selecionados
+         */
+        function filterArtists() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const typeValue = typeFilter.value;
+            
+            // Filtra artistas por termo de busca e tipo
+            filteredArtists = artistsData.filter(artist => {
+                const matchesSearch = artist.name.toLowerCase().includes(searchTerm) || 
+                                     artist.description.toLowerCase().includes(searchTerm);
+                const matchesType = !typeValue || artist.type.toLowerCase() === typeValue;
+                
+                return matchesSearch && matchesType;
+            });
+            
+            // Aplica ordenação
+            const sortValue = sortFilter.value;
+            if (sortValue === 'distancia') {
+                // Ordena por distância (menor para maior)
+                filteredArtists.sort((a, b) => {
+                    const aDist = parseFloat(a.distance);
+                    const bDist = parseFloat(b.distance);
+                    return aDist - bDist;
+                });
+            } else if (sortValue === 'avaliacao') {
+                // Ordena por avaliação (maior para menor)
+                filteredArtists.sort((a, b) => b.rating - a.rating);
+            } else if (sortValue === 'nome') {
+                // Ordena por nome (A-Z)
+                filteredArtists.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            
+            // Reseta para a primeira página e renderiza
+            currentPage = 1;
+            renderArtists();
+        }
+
+        // ===== EVENT LISTENERS =====
+        // Adiciona ouvintes de eventos para os elementos de filtro
+        searchInput.addEventListener('input', filterArtists);
+        typeFilter.addEventListener('change', filterArtists);
+        sortFilter.addEventListener('change', filterArtists);
+        
+        // Navegação entre páginas
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderArtists();
+            }
+        });
+        
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredArtists.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderArtists();
+            }
+        });
+
+        // ===== INICIALIZAÇÃO =====
+        // Inicializa a página quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArtists();
+        });
+    </script>
+</body>
+</html>

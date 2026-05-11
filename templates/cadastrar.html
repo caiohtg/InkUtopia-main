@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <main>
+        <header class="site-header">
+            <div class="header-container">
+                <!-- Logo do lado esquerdo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="../static/img/inkutopia_logo.png" alt="Logo do Site" width="150">
+                    </a>
+                </div>
+        
+                <!-- Navegação central -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="{{ url_for('exibir_home') }}">Home</a></li>
+                        <li><a href="{{ url_for('exibir_catalogo') }}">Catálogo</a></li>
+                        <li><a href="{{ url_for('exibir_ideias') }}">Ideias</a></li>
+                        <li><a href="{{ url_for('exibir_sobre') }}">Sobre</a></li>
+                    </ul>
+                </nav>
+                    <!-- Navigation bar do lado direito -->
+                    <nav class="right-navigation">
+                        <ul>
+                            <li class="nav-entrar-button"><a href="{{ url_for('exibir_login') }}">Entrar</a></li>
+                            <li class="nav-cadastrar-button"><a href="#">Cadastrar</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+<!-- -------FORMULARIO DE CADASTRO------------- -->
+        <section class="form-section">
+            <section class="text-section">
+                <div class="text-section-header">
+                    <h2>Bem-Vindo(a) Ao InkUtopia!</h2>
+                </div> 
+    
+               
+        
+            <form action="http://127.0.0.1:5000/cadastrar" method="post">
+                Nome: <input type="text" name="nome" placeholder="Seu nome" required><br>
+                Email: <input type="email" name="email" placeholder="seuemail@exemplo.com" required><br>
+                Senha: <input type="password" name="senha" placeholder="Senha" required><br>
+                Telefone: <input type="tel" name="telefone" placeholder="(11) 99999-9999" required><br>
+
+                <div class="switch-wrapper">
+                    <span id="label-cliente" class="label-text active">Cliente</span>
+
+                        <label class="switch">
+                            <input type="checkbox" name="tipo_usuario_checkbox" id="tipo_usuario_switch">
+                            <span class="slider round"></span>
+                        </label>
+
+                        <span id="label-artista" class="label-text">Artista</span>
+
+                        <input type="hidden" name="tipo_usuario" id="tipo_usuario_real" value="cliente">
+
+                    <script>
+                        const switchInput = document.getElementById('tipo_usuario_switch');
+                        const realInput = document.getElementById('tipo_usuario_real');
+                        const labelCliente = document.getElementById('label-cliente');
+                        const labelArtista = document.getElementById('label-artista');
+
+                        switchInput.addEventListener('change', function() {
+                            if (this.checked) {
+                                // Lógica para ARTISTA
+                                realInput.value = 'artista';
+                                labelArtista.classList.add('active');
+                                labelCliente.classList.remove('active');
+                            } else {
+                                // Lógica para CLIENTE
+                                realInput.value = 'cliente';
+                                labelCliente.classList.add('active');
+                                labelArtista.classList.remove('active');
+                            }
+                        });
+
+                    </script>
+
+                </div>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+
+<!-- estilo -->
+<style>
+    /* CSS Específico para o Formulário de Cadastro */
+
+body {
+    /* Substitua 'sua-imagem.jpg' pelo link ou caminho da sua foto */
+    background-image: url('../static/img/pexels-reelverse-productions-2155589357-33952926.jpg'); 
+    background-size: cover;           /* Faz a imagem cobrir a tela toda */
+    background-position: center;      /* Centraliza a imagem */
+    background-attachment: fixed;    /* Mantém o fundo parado ao rolar */
+    background-repeat: no-repeat;
+}
+
+.form-section {
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto;
+    width: 30%;
+    height: 600px;
+    margin-top:6.8%;
+    padding: 0;
+    border-radius: 4%;
+}
+
+.text-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 0;
+    padding-top: 1px;
+}
+
+.text-section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto; /* Garante a centralização se o container pai permitir */
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Estilização comum para inputs e selects */
+input {
+    height: 40px;
+}
+
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+}
+
+/* Container que alinha os textos e o switch */
+.switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espaço entre textos e o botão */
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto 25px auto; /* Centraliza no formulário e dá espaço inferior */
+}
+
+/* Estilização dos textos ao lado (Cliente/Artista) */
+.label-text {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+/* O container do switch (necessário para posicionamento) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Esconde o checkbox padrão */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* O Slider (o fundo do botão) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000; /* Cor quando desativado (Cliente) */
+    transition: .4s;
+}
+/* Estilo padrão: Cinza e tamanho normal */
+.label-text {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #888888; /* Cinza */
+    transition: all 0.3s ease; /* Transição suave para cor e tamanho */
+    display: inline-block;
+}
+
+/* Estilo quando a opção estiver ativa: Preto e Maior */
+.label-text.active {
+    color: #000000; /* Preto */
+    transform: scale(1.2); /* Aumenta em 20% */
+}
+
+/* O restante do seu CSS do switch (slider, .switch, etc) continua igual */
+.slider {
+    background-color: #333; /* Fundo do switch um pouco mais suave quando inativo */
+}
+
+/* O "botãozinho" redondo branco dentro do slider */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(255, 255, 255);
+    transition: .4s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sombra suave estilo iOS */
+}
+
+/* Quando o input está checado (ativado/Artista), o fundo fica preto (#000) */
+input:checked + .slider {
+    background-color: #000000;
+}
+
+/* Foco para acessibilidade */
+input:focus + .slider {
+    box-shadow: 0 0 1px #000000;
+}
+
+/* Move o botãozinho redondo para o lado direito quando ativado */
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Arredondamento perfeito (Estilo Round) */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.right-navigation a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.nav-entrar-button {
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10em;
+    background-color: #000000;
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.nav-entrar-button:hover {
+    background-color: #757575;
+}
+
+.nav-cadastrar-button {
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10em;
+    background-color: #757575;
+    color: #fff;
+    font-weight: 500;
+    display: grid;
+}
+
+/* Botão de Enviar */
+form button[type="submit"] {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    border-radius: 30px;
+    margin: 0 auto;
+}
+
+/* Efeito Hover pedido */
+form button[type="submit"]:hover {
+    background-color: #5f5f5f;
+}
+
+/* Esconde os <br> para o flexbox controlar o espaçamento corretamente */
+form br {
+    display: none;
+}
+
+/* Estilo para campos obrigatórios vazios quando o usuário tenta enviar */
+</style>
+</body>
+</html>
