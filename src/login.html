@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="site-header">
+            <div class="header-container">
+                <!-- Logo do lado esquerdo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="img/inkutopia_logo.png" alt="Logo do Site" width="150">
+                    </a>
+                </div>
+        
+                <!-- Navegação central -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="pages/catalogo.html">Catálogo</a></li>
+                        <li><a href="pages/ideias.html">Ideias</a></li>
+                        <li><a href="pages/sobre.html">Sobre</a></li>
+                    </ul>
+                </nav>
+                    <!-- Navigation bar do lado direito -->
+                    <nav class="right-navigation">
+                        <ul>
+                            <li class="nav-entrar-button"><a href="#">Entrar</a></li>
+                            <li class="nav-cadastrar-button"><a href="cadastrar.html">Cadastrar</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+<!-- -------FORMULARIO DE CADASTRO------------- -->
+        <section class="form-section">
+            <section class="text-section">
+                <div class="text-section-header">
+                    <h2>Bem-Vindo(a) De Volta ao InkUtopia!</h2>
+                </div>               
+
+            <form action="login" method="post">
+                <!-- {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div style="color: white; background-color: #d9534f; padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; font-size: 14px;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %} -->
+                
+                Email: <input type="email" name="email" placeholder="seuemail@exemplo.com" required><br>
+                Senha: <input type="password" name="senha" placeholder="Senha" required><br>
+
+                <button type="submit">Entrar</button>
+
+                <p>Ainda não tem uma conta?</p> 
+                <p><a href="cadastrar.html">Cadastre-se gratuitamente</a></p>
+            </form>
+    </main>
+
+<style>
+    body {
+    /* Substitua 'sua-imagem.jpg' pelo link ou caminho da sua foto */
+    background-image: url('img/pexels-reelverse-productions-2155589357-33952926.jpg'); 
+    background-size: cover;           /* Faz a imagem cobrir a tela toda */
+    background-position: center;      /* Centraliza a imagem */
+    background-attachment: fixed;    /* Mantém o fundo parado ao rolar */
+    background-repeat: no-repeat;
+}
+
+.form-section {
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto;
+    width: 30%;
+    height: 600px;
+    margin-top:6.8%;
+    padding: 0;
+    border-radius: 4%;
+}
+
+.text-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 0;
+    padding-top: 1px;
+}
+
+.text-section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto; /* Garante a centralização se o container pai permitir */
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Estilização comum para inputs e selects */
+input {
+    height: 40px;
+}
+
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+}
+
+.right-navigation a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.nav-entrar-button {
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10em;
+    background-color: #757575;
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* .nav-entrar-button:hover {
+    background-color: ;
+} */
+
+.nav-cadastrar-button {
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10em;
+    background-color: #000000;
+    color: #fff;
+    font-weight: 500;
+    display: grid;
+}
+
+.nav-cadastrar-button:hover {
+    background-color: #757575;
+}
+
+/* Botão de Enviar */
+form button[type="submit"] {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    border-radius: 30px;
+    margin: 0 auto;
+    margin-top: 69px;
+    margin-bottom: 30px;
+}
+
+/* Efeito Hover pedido */
+form button[type="submit"]:hover {
+    background-color: #5f5f5f;
+}
+
+/* Esconde os <br> para o flexbox controlar o espaçamento corretamente */
+form br {
+    display: none;
+}
+
+form p {
+    font-weight: 300;
+    margin: 0 auto;
+}
+
+</style>
+
+</body>
+</html>

@@ -32,11 +32,16 @@ def cadastrar():
             "INSERT INTO usuario (nome, email, senha, telefone, tipo_usuario) VALUES (%s, %s, %s, %s, %s)",
             (nome, email, senha, telefone, tipo_usuario)
         )
+<<<<<<< HEAD
         # conn.commit()
         # return "Usuário cadastrado com sucesso! Acessar página "
         conn.commit()
         flash("Cadastro realizado com sucesso! Faça seu login.")
         return redirect(url_for('exibir_login'))
+=======
+        conn.commit()
+        return "Usuário cadastrado com sucesso!"
+>>>>>>> 79b248e03e6f2527e2e3449c3d766c65bfe338e3
     except Exception as e:
         return f"Erro ao cadastrar: {e}", 500
     finally:
@@ -56,7 +61,11 @@ def login():
     cursor = conn.cursor()
     
     # Buscamos o usuário pelo email
+<<<<<<< HEAD
     cursor.execute("SELECT id_usuario, nome, senha, tipo_usuario FROM usuario WHERE email = %s", (email,))
+=======
+    cursor.execute("SELECT id_usuario, nome, senha FROM usuario WHERE email = %s", (email,))
+>>>>>>> 79b248e03e6f2527e2e3449c3d766c65bfe338e3
     usuario = cursor.fetchone()
     
     cursor.close()
@@ -68,8 +77,12 @@ def login():
             # Login Sucesso: Criamos a sessão
             session['id_usuario'] = usuario[0]
             session['usuario_nome'] = usuario[1]
+<<<<<<< HEAD
             session['tipo_usuario'] = usuario[3] # Importante: 'cliente' ou 'artista'
             return redirect(url_for('home'))
+=======
+            return f"Bem-vindo, {usuario[1]}! Login realizado com sucesso."
+>>>>>>> 79b248e03e6f2527e2e3449c3d766c65bfe338e3
         else:
             # Senha incorreta
             flash("Senha incorreta. Tente novamente.")
@@ -85,6 +98,7 @@ def login():
 def exibir_login():
     return render_template('login.html') # Certifique-se de que seu HTML de login tenha este nome
 
+<<<<<<< HEAD
 # Rota para a home
 @app.route('/home')
 def home():
@@ -149,5 +163,7 @@ def exibir_catalogo():
 def exibir_sobre():
     return render_template('sobre.html')
 
+=======
+>>>>>>> 79b248e03e6f2527e2e3449c3d766c65bfe338e3
 if __name__ == '__main__':
     app.run(debug=True)

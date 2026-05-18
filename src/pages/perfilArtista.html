@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - InkUtopia</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS específico do perfil -->
+    <style>
+        /* ===== ESTILOS ESPECÍFICOS DO PERFIL ===== */
+        
+        /* Reset para esta página */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 90px; /* Espaço para header fixo */
+        }
+        
+        /* Container principal */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Cabeçalho do perfil */
+        .profile-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 2.2rem;
+            color: #222;
+            margin-bottom: 5px;
+        }
+        
+        .profile-title {
+            color: #757575;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #222;
+        }
+        
+        .stat-label {
+            color: #757575;
+            font-size: 0.9rem;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-edit {
+            background: #757575;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-edit:hover {
+            background: #5a5a5a;
+            transform: translateY(-2px);
+        }
+        
+        /* Abas de navegação */
+        .profile-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: #222;
+            border-bottom: 3px solid #757575;
+            background: #f8f9fa;
+        }
+        
+        .tab:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Conteúdo das abas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* PORTFÓLIO */
+        .portfolio-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #222;
+        }
+        
+        .btn-add {
+            background: #757575;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-add:hover {
+            background: #5a5a5a;
+            transform: translateY(-2px);
+        }
+        
+        /* Grid de trabalhos */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .portfolio-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .portfolio-info {
+            padding: 20px;
+        }
+        
+        .portfolio-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        
+        .portfolio-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .portfolio-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-edit-work {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        /* Modal para adicionar trabalho */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: #222;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #757575;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-save {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* ÁREA DE ESTATÍSTICAS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #757575;
+            margin-bottom: 15px;
+        }
+        
+        .stat-number-lg {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 5px;
+        }
+        
+        /* CONFIGURAÇÕES */
+        .settings-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .settings-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .settings-title {
+            font-size: 1.3rem;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                text-align: center;
+                min-width: 120px;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .profile-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- ===== HEADER ===== -->
+        <header class="site-header">
+            <div class="header-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../img/inkutopia_logo.png" alt="Logo InkUtopia" width="150">
+                    </a>
+                </div>
+        
+                <nav class="main-navigation">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="catalogo.html">Catálogo</a></li>
+                        <li><a href="ideias.html">Ideias</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                    </ul>
+                </nav>
+        
+                <div class="header-right">
+                    <nav class="right-navigation">
+                        <ul>
+                            <li><a href="login.html">Sair</a></li>
+                            <li><a href="perfilArtista.html" class="active">Meu Perfil</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== CONTEÚDO DO PERFIL ===== -->
+        <div class="profile-container">
+            <!-- Cabeçalho do Perfil -->
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                     alt="Foto do Artista" class="profile-avatar" id="profileAvatar">
+                
+                <div class="profile-info">
+                    <h1 class="profile-name" id="artistName">Alex Tattoo</h1>
+                    <p class="profile-title">Tatuador especializado em Realismo</p>
+                    <p>📍 São Paulo, SP • 5 anos de experiência</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="worksCount">24</div>
+                            <div class="stat-label">Trabalhos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.9</div>
+                            <div class="stat-label">Avaliação</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button class="btn-edit" onclick="editProfile()">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </button>
+                    <button class="btn-edit" onclick="shareProfile()">
+                        <i class="fas fa-share-alt"></i> Compartilhar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Abas de Navegação -->
+            <div class="profile-tabs">
+                <div class="tab active" onclick="switchTab('portfolio')">Portfólio</div>
+                <div class="tab" onclick="switchTab('statistics')">Estatísticas</div>
+                <div class="tab" onclick="switchTab('schedule')">Agenda</div>
+                <div class="tab" onclick="switchTab('settings')">Configurações</div>
+            </div>
+
+            <!-- Conteúdo das Abas -->
+            
+            <!-- ABA: PORTFÓLIO -->
+            <div id="portfolioTab" class="tab-content active">
+                <div class="portfolio-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Meu Portfólio</h2>
+                        <button class="btn-add" onclick="openAddWorkModal()">
+                            <i class="fas fa-plus"></i> Adicionar Trabalho
+                        </button>
+                    </div>
+                    
+                    <div class="portfolio-grid" id="portfolioGrid">
+                        <!-- Trabalhos serão carregados aqui via JavaScript -->
+                    </div>
+                    
+                    <div class="no-works" id="noWorksMessage" style="display: none; text-align: center; padding: 50px;">
+                        <i class="fas fa-images" style="font-size: 3rem; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3 style="color: #666; margin-bottom: 10px;">Nenhum trabalho adicionado ainda</h3>
+                        <p style="color: #999;">Comece criando seu portfólio clicando em "Adicionar Trabalho"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: ESTATÍSTICAS -->
+            <div id="statisticsTab" class="tab-content">
+                <div class="portfolio-section">
+                    <h2 class="section-title">Minhas Estatísticas</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-number-lg">1,245</div>
+                            <div class="stat-label">Visualizações do Perfil</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-number-lg">89</div>
+                            <div class="stat-label">Curtidas Recebidas</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-number-lg">12</div>
+                            <div class="stat-label">Agendamentos/Mês</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-number-lg">4.9</div>
+                            <div class="stat-label">Avaliação Média</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 25px; border-radius: 10px; margin-top: 30px;">
+                        <h3 style="margin-bottom: 20px; color: #222;">Desempenho Mensal</h3>
+                        <div style="height: 200px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                            Gráfico de Desempenho (Implementação Futura)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: AGENDA -->
+            <div id="scheduleTab" class="tab-content">
+                <div class="portfolio-section">
+                    <h2 class="section-title">Minha Agenda</h2>
+                    
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+                        <h3 style="margin-bottom: 15px; color: #222;">Próximos Agendamentos</h3>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #28a745;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>João Silva</strong>
+                                        <p style="color: #666; margin: 5px 0;">Tatuagem Tribal - 3 horas</p>
+                                        <p style="color: #999; font-size: 0.9rem;">📍 Estúdio Central</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: bold; color: #222;">15 Dez, 2024</div>
+                                        <div style="color: #666;">14:00 - 17:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>Maria Santos</strong>
+                                        <p style="color: #666; margin: 5px 0;">Tatuagem Aquarela - 2 horas</p>
+                                        <p style="color: #999; font-size: 0.9rem;">📍 Estúdio Centro</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: bold; color: #222;">18 Dez, 2024</div>
+                                        <div style="color: #666;">10:00 - 12:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-add" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-calendar-plus"></i> Gerenciar Agenda Completa
+                    </button>
+                </div>
+            </div>
+
+            <!-- ABA: CONFIGURAÇÕES -->
+            <div id="settingsTab" class="tab-content">
+                <div class="settings-form">
+                    <h2 class="section-title">Configurações do Perfil</h2>
+                    
+                    <div class="settings-section">
+                        <h3 class="settings-title">Informações Pessoais</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-input" value="Alex Tattoo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Biografia</label>
+                            <textarea class="form-textarea">Especialista em tatuagens realistas com 5 anos de experiência. Apaixonado por transformar ideias em arte corporal permanente.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Especialidades</label>
+                            <input type="text" class="form-input" value="Realismo, Retratos, Geométrico">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3 class="settings-title">Preferências</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Disponibilidade para Agendamentos</label>
+                            <select class="form-select">
+                                <option>Aceito novos agendamentos</option>
+                                <option>Agenda lotada - lista de espera</option>
+                                <option>Férias - retorno em Janeiro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notificações por Email</label>
+                            <div style="display: flex; gap: 20px;">
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" checked> Novos agendamentos
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" checked> Mensagens
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox"> Novos seguidores
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-cancel">Cancelar</button>
+                        <button class="btn-save">Salvar Alterações</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para Adicionar Trabalho -->
+            <div class="modal-overlay" id="addWorkModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Adicionar ao Portfólio</h2>
+                        <button class="btn-close" onclick="closeAddWorkModal()">&times;</button>
+                    </div>
+                    
+                    <form id="addWorkForm">
+                        <div class="form-group">
+                            <label class="form-label">Título do Trabalho</label>
+                            <input type="text" class="form-input" id="workTitle" placeholder="Ex: Tatuagem Tribal no Braço" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Imagem</label>
+                            <input type="file" class="form-input" id="workImage" accept="image/*" required>
+                            <small style="color: #666; display: block; margin-top: 5px;">Recomendado: imagens quadradas ou retangulares, alta qualidade</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-textarea" id="workDescription" placeholder="Descreva o trabalho, técnicas utilizadas, significado..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Estilo</label>
+                            <select class="form-select" id="workStyle">
+                                <option value="">Selecione o estilo</option>
+                                <option value="realismo">Realismo</option>
+                                <option value="tradicional">Tradicional</option>
+                                <option value="aquarela">Aquarela</option>
+                                <option value="geometrico">Geométrico</option>
+                                <option value="tribal">Tribal</option>
+                                <option value="minimalista">Minimalista</option>
+                                <option value="old-school">Old School</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Tags (separadas por vírgula)</label>
+                            <input type="text" class="form-input" id="workTags" placeholder="Ex: braço, tribal, preto e cinza">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="closeAddWorkModal()">Cancelar</button>
+                            <button type="submit" class="btn-save">Adicionar ao Portfólio</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Dados iniciais (simulando dados salvos)
+        let portfolioWorks = JSON.parse(localStorage.getItem('inkutopia_portfolio')) || [
+            {
+                id: 1,
+                title: "Tatuagem Tribal Completa",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Tatuagem tribal completa nas costas, trabalho realizado em 3 sessões.",
+                style: "tribal",
+                tags: ["costas", "tribal", "grande"],
+                date: "2024-11-15"
+            },
+            {
+                id: 2,
+                title: "Retrato Realista",
+                image: "https://images.unsplash.com/photo-1612030681925-d7dd44c6c76a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Retrato realista no braço, homenagem a familiar.",
+                style: "realismo",
+                tags: ["braço", "retrato", "realismo"],
+                date: "2024-10-20"
+            },
+            {
+                id: 3,
+                title: "Aquarela Colorida",
+                image: "https://images.unsplash.com/photo-1597423244039-3b5f6f5a8c6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Tatuagem estilo aquarela com cores vibrantes.",
+                style: "aquarela",
+                tags: ["cor", "aquarela", "flor"],
+                date: "2024-09-10"
+            }
+        ];
+
+        // Elementos DOM
+        const portfolioGrid = document.getElementById('portfolioGrid');
+        const noWorksMessage = document.getElementById('noWorksMessage');
+        const addWorkModal = document.getElementById('addWorkModal');
+        const addWorkForm = document.getElementById('addWorkForm');
+        const worksCount = document.getElementById('worksCount');
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPortfolio();
+            updateWorksCount();
+        });
+
+        // Renderizar portfólio
+        function renderPortfolio() {
+            portfolioGrid.innerHTML = '';
+            
+            if (portfolioWorks.length === 0) {
+                noWorksMessage.style.display = 'block';
+                return;
+            }
+            
+            noWorksMessage.style.display = 'none';
+            
+            portfolioWorks.forEach(work => {
+                const workElement = document.createElement('div');
+                workElement.className = 'portfolio-item';
+                workElement.innerHTML = `
+                    <img src="${work.image}" alt="${work.title}" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">${work.title}</h3>
+                        <p class="portfolio-desc">${work.description}</p>
+                        
+                        <div class="portfolio-tags">
+                            <span class="tag">${getStyleName(work.style)}</span>
+                            ${work.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        
+                        <div class="portfolio-actions">
+                            <button class="btn-action btn-edit-work" onclick="editWork(${work.id})">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteWork(${work.id})">
+                                <i class="fas fa-trash"></i> Excluir
+                            </button>
+                        </div>
+                    </div>
+                `;
+                portfolioGrid.appendChild(workElement);
+            });
+        }
+
+        // Traduzir código do estilo para nome
+        function getStyleName(styleCode) {
+            const styles = {
+                'realismo': 'Realismo',
+                'tradicional': 'Tradicional',
+                'aquarela': 'Aquarela',
+                'geometrico': 'Geométrico',
+                'tribal': 'Tribal',
+                'minimalista': 'Minimalista',
+                'old-school': 'Old School'
+            };
+            return styles[styleCode] || styleCode;
+        }
+
+        // Atualizar contador de trabalhos
+        function updateWorksCount() {
+            worksCount.textContent = portfolioWorks.length;
+        }
+
+        // Trocar entre abas
+        function switchTab(tabName) {
+            // Remover active de todas as abas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Adicionar active na aba clicada
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+
+        // Modal: Adicionar trabalho
+        function openAddWorkModal() {
+            addWorkModal.classList.add('active');
+            addWorkForm.reset();
+        }
+
+        function closeAddWorkModal() {
+            addWorkModal.classList.remove('active');
+        }
+
+        // Formulário: Adicionar trabalho
+        addWorkForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newWork = {
+                id: Date.now(), // ID único baseado no timestamp
+                title: document.getElementById('workTitle').value,
+                image: document.getElementById('workImage').files[0] ? 
+                       URL.createObjectURL(document.getElementById('workImage').files[0]) : 
+                       'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                description: document.getElementById('workDescription').value,
+                style: document.getElementById('workStyle').value,
+                tags: document.getElementById('workTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            portfolioWorks.unshift(newWork);
+            savePortfolio();
+            renderPortfolio();
+            updateWorksCount();
+            closeAddWorkModal();
+            
+            alert('Trabalho adicionado ao portfólio com sucesso!');
+        });
+
+        // Editar trabalho
+        function editWork(workId) {
+            const work = portfolioWorks.find(w => w.id === workId);
+            if (work) {
+                if (confirm(`Editar "${work.title}"?`)) {
+                    // Aqui você pode abrir um modal de edição
+                    // Por enquanto, vamos apenas mostrar um prompt simples
+                    const newTitle = prompt('Novo título:', work.title);
+                    if (newTitle) {
+                        work.title = newTitle;
+                        savePortfolio();
+                        renderPortfolio();
+                    }
+                }
+            }
+        }
+
+        // Excluir trabalho
+        function deleteWork(workId) {
+            if (confirm('Tem certeza que deseja excluir este trabalho?')) {
+                portfolioWorks = portfolioWorks.filter(w => w.id !== workId);
+                savePortfolio();
+                renderPortfolio();
+                updateWorksCount();
+                alert('Trabalho excluído com sucesso!');
+            }
+        }
+
+        // Salvar no localStorage
+        function savePortfolio() {
+            localStorage.setItem('inkutopia_portfolio', JSON.stringify(portfolioWorks));
+        }
+
+        // Editar perfil
+        function editProfile() {
+            const newName = prompt('Novo nome:', document.getElementById('artistName').textContent);
+            if (newName) {
+                document.getElementById('artistName').textContent = newName;
+                alert('Nome atualizado!');
+            }
+        }
+
+        // Compartilhar perfil
+        function shareProfile() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Meu Portfólio - InkUtopia',
+                    text: 'Confira meu portfólio de tatuagens no InkUtopia!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link do perfil copiado para a área de transferência!');
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            if (event.target === addWorkModal) {
+                closeAddWorkModal();
+            }
+        };
+    </script>
+</body>
+</html>
