@@ -1,171 +1,6 @@
-# from flask import Flask, request, render_template, redirect, url_for, session, flash
-# import psycopg2
-
-# app = Flask(__name__)
-# # A secret_key é obrigatória para usar session e flash
-# app.secret_key = 'chave_secreta_para_desenvolvimento'
-
-# def conectar():
-#     return psycopg2.connect(
-#         host="localhost",
-#         database="DB_InkUtopia",
-#         user="postgres",
-#         password="230369"
-#     )
-
-# @app.route('/cadastrar', methods=['POST'])
-# def cadastrar():
-#     nome = request.form.get('nome')
-#     email = request.form.get('email')
-#     senha = request.form.get('senha')
-#     telefone = request.form.get('telefone')
-#     tipo_usuario = request.form.get('tipo_usuario')
-
-#     # Validação simples
-#     if not all([nome, email, senha, telefone, tipo_usuario]):
-#         return "Erro: Todos os campos são obrigatórios", 400
-
-#     conn = conectar()
-#     cursor = conn.cursor()
-#     try:
-#         cursor.execute(
-#             "INSERT INTO usuario (nome, email, senha, telefone, tipo_usuario) VALUES (%s, %s, %s, %s, %s)",
-#             (nome, email, senha, telefone, tipo_usuario)
-#         )
-#         # conn.commit()
-#         # return "Usuário cadastrado com sucesso! Acessar página "
-#         conn.commit()
-#         flash("Cadastro realizado com sucesso! Faça seu login.")
-#         return redirect(url_for('exibir_login'))
-
-#         conn.commit()
-#         return "Usuário cadastrado com sucesso!"
-
-#     except Exception as e:
-#         return f"Erro ao cadastrar: {e}", 500
-#     finally:
-#         cursor.close()
-#         conn.close()
-
-# @app.route('/login', methods=['POST'])
-# def login():
-#     email = request.form.get('email')
-#     senha = request.form.get('senha')
-
-#     if not email or not senha:
-#         flash("Por favor, preencha todos os campos.")
-#         return redirect(url_for('exibir_login')) # Redireciona de volta para a página de login
-
-#     conn = conectar()
-#     cursor = conn.cursor()
-    
-#     # Buscamos o usuário pelo email
-
-#     cursor.execute("SELECT id_usuario, nome, senha, tipo_usuario FROM usuario WHERE email = %s", (email,))
-
-#     cursor.execute("SELECT id_usuario, nome, senha FROM usuario WHERE email = %s", (email,))
-
-#     usuario = cursor.fetchone()
-    
-#     cursor.close()
-#     conn.close()
-
-#     if usuario:
-#         # usuario[2] é a senha vinda do banco (SELECT id, nome, senha...)
-#         if usuario[2] == senha:
-#             # Login Sucesso: Criamos a sessão
-#             session['id_usuario'] = usuario[0]
-#             session['usuario_nome'] = usuario[1]
-#             session['tipo_usuario'] = usuario[3] # Importante: 'cliente' ou 'artista'
-#             return redirect(url_for('home'))
-
-#             return f"Bem-vindo, {usuario[1]}! Login realizado com sucesso."
-
-#         else:
-#             # Senha incorreta
-#             flash("Senha incorreta. Tente novamente.")
-#     else:
-#         # Email não encontrado
-#         flash("Email não cadastrado.")
-
-#     # Se chegou aqui, é porque o login falhou
-#     return redirect(url_for('exibir_login'))
-
-# # Rota apenas para exibir a página (HTML)
-# @app.route('/')
-# def exibir_login():
-#     return render_template('login.html') # Certifique-se de que seu HTML de login tenha este nome
-
-
-# # Rota para a home
-# @app.route('/home')
-# def home():
-#     # Verificamos se o usuário está logado na sessão
-#     if 'id_usuario' not in session:
-#         flash("Por favor, faça login primeiro.")
-#         return redirect(url_for('exibir_login'))
-    
-#     return render_template('home.html', nome=session.get('usuario_nome'))
-
-# # Rota para o perfil ULTIMA ALTERAÇÃO
-# @app.route('/perfil')
-# def perfil():
-#     if 'id_usuario' not in session:
-#         return redirect(url_for('exibir_login'))
-
-#     # Buscamos os dados para exibir na página (nome, email, etc)
-#     conn = conectar()
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT nome, email, telefone, tipo_usuario FROM usuario WHERE id_usuario = %s", (session['id_usuario'],))
-#     dados = cursor.fetchone()
-#     cursor.close()
-#     conn.close()
-
-#     usuario = {'nome': dados[0], 'email': dados[1], 'telefone': dados[2], 'tipo': dados[3]}
-
-#     # O "pulo do gato": decide o template baseado no tipo
-#     if usuario['tipo'] == 'artista':
-#         return render_template('perfil_artista.html', usuario=usuario)
-#     else:
-#         return render_template('perfil_cliente.html', usuario=usuario)
-
-# # Função de Logout
-# @app.route('/logout')
-# def logout():
-#     session.clear() # Limpa todos os dados da sessão
-#     flash("Você saiu da conta.")
-#     return redirect(url_for('exibir_login'))
-
-# # Exibir Cadastro
-# @app.route('/cadastrar')
-# def exibir_cadastro():
-#     return render_template('cadastrar.html')
-
-# # Exibir Home
-# @app.route('/home')
-# def exibir_home():
-#     return render_template('home.html')
-
-# # Exibir Ideias
-# @app.route('/ideias')
-# def exibir_ideias():
-#     return render_template('ideias.html')
-
-# #Exibir Catalogo
-# @app.route('/catalogo')
-# def exibir_catalogo():
-#     return render_template('catalogo.html')
-
-# #Exibir Sobre
-# @app.route('/sobre')
-# def exibir_sobre():
-#     return render_template('sobre.html')
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 from flask import Flask, request, render_template, redirect, url_for, session, flash
@@ -201,26 +36,32 @@ def cadastrar():
     telefone = request.form.get('telefone')
     tipo_usuario = request.form.get('tipo_usuario')
 
-    if not all([nome, email, senha, telefone, tipo_usuario]):
-        flash("Erro: Todos os campos são obrigatórios")
+    # SEGURANÇA: Garante que NENHUM campo veio nulo ou em branco
+    if not nome or not email or not senha or not telefone or not tipo_usuario:
         return redirect(url_for('exibir_cadastro'))
 
-    conn = conectar()
-    cursor = conn.cursor()
     try:
+        # Só tenta criptografar se a senha for uma string válida
+        senha_criptografada = generate_password_hash(senha)
+        
+        conn = conectar()
+        cursor = conn.cursor()
+        
         cursor.execute(
             "INSERT INTO usuario (nome, email, senha, telefone, tipo_usuario) VALUES (%s, %s, %s, %s, %s)",
-            (nome, email, senha, telefone, tipo_usuario)
+            (nome, email, senha_criptografada, telefone, tipo_usuario)
         )
         conn.commit()
-        flash("Cadastro realizado com sucesso! Faça seu login.")
-        return redirect(url_for('exibir_login'))
-    except Exception as e:
-        return f"Erro ao cadastrar: {e}", 500
-    finally:
+        
         cursor.close()
         conn.close()
-
+        
+        flash("Cadastro realizado com sucesso! Faça seu login.")
+        return redirect(url_for('exibir_login'))
+        
+    except Exception as e:
+        return f"Erro ao cadastrar: {e}", 500
+        
 @app.route('/login', methods=['POST'])
 def login():
     email = request.form.get('email')
@@ -232,27 +73,58 @@ def login():
 
     conn = conectar()
     cursor = conn.cursor()
-    
-    # CORRIGIDO: Agora trazemos o tipo_usuario corretamente em uma única consulta
     cursor.execute("SELECT id_usuario, nome, senha, tipo_usuario FROM usuario WHERE email = %s", (email,))
     usuario = cursor.fetchone()
-    
     cursor.close()
     conn.close()
 
     if usuario:
-        # usuario[2] é a senha vinda do banco
-        if usuario[2] == senha:
+        if check_password_hash(usuario[2], senha):
             session['id_usuario'] = usuario[0]
             session['usuario_nome'] = usuario[1]
-            session['tipo_usuario'] = usuario[3] # Agora o índice 3 existe!
-            return redirect(url_for('home'))
+            session['tipo_usuario'] = usuario[3] 
+            
+            # EM VEZ DE REDIRECIONAR DIRETO:
+            # Passamos um comando para o template saber que foi sucesso
+            return render_template('login.html', login_sucesso=True)
         else:
             flash("Senha incorreta. Tente novamente.")
     else:
         flash("Email não cadastrado.")
 
     return redirect(url_for('exibir_login'))
+# @app.route('/login', methods=['POST'])
+# def login():
+#     email = request.form.get('email')
+#     senha = request.form.get('senha')
+
+#     if not email or not senha:
+#         flash("Por favor, preencha todos os campos.")
+#         return redirect(url_for('exibir_login'))
+
+#     conn = conectar()
+#     cursor = conn.cursor()
+    
+#     # CORRIGIDO: Agora trazemos o tipo_usuario corretamente em uma única consulta
+#     cursor.execute("SELECT id_usuario, nome, senha, tipo_usuario FROM usuario WHERE email = %s", (email,))
+#     usuario = cursor.fetchone()
+    
+#     cursor.close()
+#     conn.close()
+
+#     if usuario:
+#         # usuario[2] é a senha vinda do banco
+#         if usuario[2] == senha:
+#             session['id_usuario'] = usuario[0]
+#             session['usuario_nome'] = usuario[1]
+#             session['tipo_usuario'] = usuario[3] # Agora o índice 3 existe!
+#             return redirect(url_for('home'))
+#         else:
+#             flash("Senha incorreta. Tente novamente.")
+#     else:
+#         flash("Email incorreto.")
+
+#     return redirect(url_for('exibir_login'))
 
 @app.route('/logout')
 def logout():
@@ -442,6 +314,81 @@ def exibir_catalogo():
         
     # Passamos a lista de artes globais para o template do catálogo
     return render_template('catalogo.html', artes=feed_artes)
+
+
+@app.route('/perfil/editar', methods=['GET'])
+def exibir_editar_perfil():
+    # Garante que só quem está logado consegue acessar
+    if 'id_usuario' not in session:
+        flash("Por favor, faça login primeiro.")
+        return redirect(url_for('exibir_login'))
+    
+    id_usuario = session['id_usuario']
+    
+    # Busca os dados mais recentes do usuário no banco
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT nome, email, telefone, tipo_usuario FROM usuario WHERE id_usuario = %s", (id_usuario,))
+    usuario = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    
+    if not usuario:
+        flash("Usuário não encontrado.")
+        return redirect(url_for('home'))
+    
+    # Passa os dados para o HTML preencher os inputs automaticamente
+    dados_usuario = {
+        'nome': usuario[0],
+        'email': usuario[1],
+        'telefone': usuario[2],
+        'tipo': usuario[3]
+    }
+    
+    return render_template('editar_perfil.html', usuario=dados_usuario)
+
+
+@app.route('/perfil/editar', methods=['POST'])
+def editar_perfil():
+    if 'id_usuario' not in session:
+        return redirect(url_for('exibir_login'))
+    
+    id_usuario = session['id_usuario']
+    
+    # Captura os dados vindos do formulário
+    novo_nome = request.form.get('nome')
+    novo_email = request.form.get('email')
+    novo_telefone = request.form.get('telefone')
+    
+    if not novo_nome or not novo_email:
+        flash("Nome e E-mail são campos obrigatórios.")
+        return redirect(url_for('exibir_editar_perfil'))
+    
+    # Atualiza os dados no banco de dados
+    conn = conectar()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "UPDATE usuario SET nome = %s, email = %s, telefone = %s WHERE id_usuario = %s",
+            (novo_nome, novo_email, novo_telefone, id_usuario)
+        )
+        conn.commit()
+        
+        # Atualiza o nome na sessão caso ele tenha mudado o próprio nome
+        session['usuario_nome'] = novo_nome
+        flash("Dados atualizados com sucesso!")
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"Erro ao atualizar perfil: {e}")
+        flash("Erro ao atualizar os dados. Verifique se o e-mail já está em uso.")
+        return redirect(url_for('exibir_editar_perfil'))
+    finally:
+        cursor.close()
+        conn.close()
+    
+    # Redireciona de volta para a home (ou para a página de perfil quando fizermos o visual dela)
+    return redirect(url_for('home'))
 
 
 @app.route('/postagem/deletar/<int:id_postagem>', methods=['POST'])

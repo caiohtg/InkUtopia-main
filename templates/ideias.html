@@ -332,8 +332,8 @@
                             {% if session.get('id_usuario') %}
                                 <a href="{{ url_for('perfil') }}" style="color: #000000;">Meu Perfil</a>
                             {% else %}
-                                <a href="{{ url_for('exibir_login') }}">Entrar</a>
-                                <a href="{{ url_for('exibir_cadastro') }}">Cadastrar</a>
+                                <a href="{{ url_for('exibir_login') }}" style="color: #000000; margin-right: 10px;">Entrar</a>
+                                <a href="{{ url_for('exibir_cadastro') }}" style="color: #000000;">Cadastrar</a>
                             {% endif %}
                             
                             <!-- <li><a href="/carrinho">Carrinho</a></li>

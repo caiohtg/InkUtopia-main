@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>InkUtopia - Editar Perfil</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #8f8f8f; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        
+        .card { background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); width: 100%; max-width: 400px; border: 1px solid #2d2d2d; }
+        
+        h2 { margin-top: 0; color: #000000; font-size: 24px; text-align: center; margin-bottom: 25px; }
+        
+        .tipo-tag { display: inline-block; background: #2980b9; color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; text-transform: uppercase; font-weight: bold; margin-bottom: 20px; }
+        
+        .tipo-tag.artista { background: #e67e22; }
+        
+        .form-group { margin-bottom: 20px; text-align: left; }
+        
+        label { display: block; margin-bottom: 8px; color: #aaa; font-size: 14px; }
+        
+        input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #d8d8d859; color: #000000; font-size: 16px; box-sizing: border-box; transition: border 0.05s; }
+        
+        input:focus { border-color: #000000; outline: none; border: 3px solid #333; }
+        
+        .btn-salvar { width: 100%; padding: 12px; background: #000000; border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px; transition: background 0.3s; }
+        
+        .btn-salvar:hover { background: #525252; }
+        
+        .btn-cancelar { display: block; text-align: center; margin-top: 15px; color: #e71c1c; text-decoration: none; font-size: 14px; }
+        
+        .btn-cancelar:hover { color: #e96666; }
+        
+        .alert { background: #e74c3c; color: white; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Editar Meus Dados</h2>
+        
+        <center>
+            <span class="tipo-tag {% if usuario.tipo == 'artista' %}artista{% endif %}">
+                Perfil {{ 'Tatuador' if usuario.tipo == 'artista' else 'Cliente' }}
+            </span>
+        </center>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('editar_perfil') }}" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail de Contato</label>
+                <input type="email" id="email" name="email" value="{{ usuario.email }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone / WhatsApp</label>
+                <input type="text" id="telefone" name="telefone" value="{{ usuario.telefone or '' }}" placeholder="(00) 00000-0000">
+            </div>
+
+            <button type="submit" class="btn-salvar">Salvar Alterações</button>
+            <a href="{{ url_for('home') }}" class="btn-cancelar">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

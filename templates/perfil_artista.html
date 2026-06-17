@@ -62,6 +62,7 @@
     <div class="tools-grid">
         <a href="#form-portfolio" class="tool-btn"><i>🎨</i> Novo Portfólio</a>
         <a href="#" class="tool-btn"><i>📅</i> Verificar Agenda</a>
+        <a style="color: #000000; font-weight: bold; text-decoration: none;" href="{{ url_for('exibir_editar_perfil')}}">⚙️ Editar Meus Dados</a>
     </div>
 </div>
 
@@ -163,22 +164,22 @@
         </div>
     </div>
     <div id="modalEditar" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
-    <div class="modal-conteudo" style="background: #111; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; border: 1px solid #333;">
-        <h2 style="color: #fff; margin-bottom: 15px;">Editar Arte</h2>
+    <div class="modal-conteudo" style="background: #ffffff; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; border: 1px solid #333;">
+        <h2 style="color: #000000; margin-bottom: 15px;">Editar Arte</h2>
         
         <form id="formEditarPostagem" method="POST" action="">
-            <label style="color: #bbb; display:block; margin-bottom: 5px;">Título</label>
-            <input type="text" id="editarTitulo" name="titulo" required style="width: 100%; padding: 8px; margin-bottom: 15px; background: #222; border: 1px solid #444; color: #fff;">
+            <label style="color: #000000; display:block; margin-bottom: 5px;">Título</label>
+            <input type="text" id="editarTitulo" name="titulo" required style="width: 100%; padding: 8px; margin-bottom: 15px; background: #dadada5e; border: 1px solid #444; color: #000000;">
 
-            <label style="color: #bbb; display:block; margin-bottom: 5px;">Descrição</label>
-            <textarea id="editarDescricao" name="descricao" rows="3" style="width: 100%; padding: 8px; margin-bottom: 15px; background: #222; border: 1px solid #444; color: #fff; resize: none;"></textarea>
+            <label style="color: #000000; display:block; margin-bottom: 5px;">Descrição</label>
+            <textarea id="editarDescricao" name="descricao" rows="3" style="width: 100%; padding: 8px; margin-bottom: 15px; background:  #dadada5e; border: 1px solid #444; color: #000000; resize: none;"></textarea>
 
-            <label style="color: #bbb; display:block; margin-bottom: 5px;">Preço Estimado (R$)</label>
-            <input type="number" step="0.01" id="editarPreco" name="preco" style="width: 100%; padding: 8px; margin-bottom: 20px; background: #222; border: 1px solid #444; color: #fff;">
+            <label style="color: #000000; display:block; margin-bottom: 5px;">Preço Estimado (R$)</label>
+            <input type="number" step="0.01" id="editarPreco" name="preco" style="width: 100%; padding: 8px; margin-bottom: 20px; background:  #dadada5e; border: 1px solid #444; color: #000000;">
 
             <div style="display: flex; justify-content: space-between;">
-                <button type="button" onclick="fecharModalEditar()" class="btn" style="background: #555; color: #fff; padding: 8px 15px;">Cancelar</button>
-                <button type="submit" class="btn" style="background: #9b59b6; color: #fff; padding: 8px 15px;">Salvar Alterações</button>
+                <button type="button" onclick="fecharModalEditar()" class="btn" style="background: #f52323; color: #fff; padding: 8px 15px;">Cancelar</button>
+                <button type="submit" class="btn" style="background: #000000; color: #fff; padding: 8px 15px;">Salvar Alterações</button>
             </div>
         </form>
     </div>

@@ -1141,3 +1141,28 @@ body.internal-page {
 }
 
 }
+
+.alertas-container {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #fde8e8;
+    color: #e53e3e;
+    border: 1px solid #f8b4b4;
+}
+
+.alert-success {
+    background-color: #def7ec;
+    color: #03543f;
+    border: 1px solid #bcf0da;
+}
