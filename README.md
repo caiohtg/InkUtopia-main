@@ -29,7 +29,6 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 | :--- | :--- |
 | **Cliente** | Usuário que busca artistas, interage com posts, realiza agendamentos e avalia serviços. |
 | **Artista** | Profissional que publica trabalhos, oferece serviços e pode gerenciar ou participar de um estúdio. |
-| **Admin do Estúdio** | Um Artista com permissões administrativas para gerenciar membros e informações do estúdio. |
 
 ---
 
@@ -72,12 +71,10 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 
 ---
 
-## 🚀 Próximos Passos (Backlog)
-- [ ] Sistema de Seguidores e Feed Personalizado.
-- [ ] Integração com Mapas (Localização de estúdios próximos).
-- [ ] Sistema de Notificações Push/In-app.
-- [ ] Agenda visual para o Artista.
-- [ ] Canal de Denúncias.
+## 🚀 Ajustes Realizados a partir dos feedbacks 
+* **Remoção de pastas e arquivos do repositório** (`.env`, `banco.db` e `__pycache__`.)
+* **
+
 
 ---
 
