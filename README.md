@@ -10,7 +10,15 @@ Uma rede social especializada para conectar clientes, artistas tatuadores e est�
 - [Regras de Negócio (RN)](#-regras-de-negócio-rn)
 - [Funcionalidades e Interações](#-funcionalidades-e-interações)
 - [Segurança e Moderação](#-segurança-e-moderação)
-- [Tecnologias](#-tecnologias)
+- [Ajustes Realizados a partir dos feedbacks](#-ajustes-realizados)
+- [Como Executar o Projeto Localmente](#-instruções-básicas-execução)
+
+---
+## 👥 Integrantes do Projeto
+- Arthur Hanna
+- Caio Henrique Targino Gomes
+- Caio Henrique França Dib
+- Enzo Rocha Oliveira
 
 ---
 
@@ -29,7 +37,6 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 | :--- | :--- |
 | **Cliente** | Usuário que busca artistas, interage com posts, realiza agendamentos e avalia serviços. |
 | **Artista** | Profissional que publica trabalhos, oferece serviços e pode gerenciar ou participar de um estúdio. |
-| **Admin do Estúdio** | Um Artista com permissões administrativas para gerenciar membros e informações do estúdio. |
 
 ---
 
@@ -72,12 +79,13 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 
 ---
 
-## 🚀 Próximos Passos (Backlog)
-- [ ] Sistema de Seguidores e Feed Personalizado.
-- [ ] Integração com Mapas (Localização de estúdios próximos).
-- [ ] Sistema de Notificações Push/In-app.
-- [ ] Agenda visual para o Artista.
-- [ ] Canal de Denúncias.
+## 🚀 Ajustes Realizados a partir dos feedbacks 
+* **Remoção de pastas e arquivos do repositório** (`.env`, `banco.db` e `__pycache__`.)
+* **Definir um fluxo principal pequeno e funcional** (`Apresentado no Documento_Negocio_InkUtopia`)
+* **Exposição de uma documentação técnica**
+* **Instruções de Execução Básicas**
+* **Melhora na divisão de tarefas e ajustes nas atribuições de cada membro**
+
 
 ---
 
@@ -87,3 +95,29 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 =======
 * **Back-End:** Flask Python
 
+=======
+* **Front-End:** HTML5, CSS3, JavaScript
+---
+
+
+## 🚀 Como Executar o Projeto Localmente
+
+Siga os passos abaixo para configurar o ambiente e rodar o InkUtopia na sua máquina.
+
+### 1. Pré-requisitos
+Certifique-se de ter instalado em seu computador:
+* **Python 3.x**
+* **PostgreSQL** (com um banco de dados criado para o projeto)
+
+### 2. Clonar o Repositório
+Se for a primeira vez baixando o projeto nesta máquina:
+```bash
+git clone [https://github.com/caiohtg/InkUtopia-main.git](https://github.com/caiohtg/InkUtopia-main.git)
+cd InkUtopia-main
+```
+
+### 3. Instale as bibliotecas necessárias do Flask e do banco de dados
+``pip install flask psycopg2 werkzeug``
+
+### 4. Executar a Aplicação
+``py app.py``
