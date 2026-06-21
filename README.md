@@ -91,7 +91,6 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 * **Front-End:** HTML5, CSS3, JavaScript
 ---
 
-## ---
 
 ## 🚀 Como Executar o Projeto Localmente
 
