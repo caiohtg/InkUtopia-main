@@ -14,6 +14,13 @@ Uma rede social especializada para conectar clientes, artistas tatuadores e est�
 - [Como Executar o Projeto Localmente](#-instruções-básicas-execução)
 
 ---
+## 👥 Integrantes do Projeto
+- Arthur Hanna
+- Caio Henrique Targino Gomes
+- Caio Henrique França Dib
+- Enzo Rocha Oliveira
+
+---
 
 ## 📖 Descrição Geral
 A plataforma funciona como um ecossistema completo para o mundo da tatuagem, permitindo:
@@ -77,6 +84,7 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 * **Definir um fluxo principal pequeno e funcional** (`Apresentado no Documento_Negocio_InkUtopia`)
 * **Exposição de uma documentação técnica**
 * **Instruções de Execução Básicas**
+* **Melhora na divisão de tarefas e ajustes nas atribuições de cada membro**
 
 
 ---
