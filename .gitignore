@@ -1,0 +1,13 @@
+# === CACHE DO PYTHON ===
+__pycache__/
+*.pyc
+
+# === SEGREDOS E CONFIGURAÇÕES ===
+.env
+*.env
+config.json
+instance/
+
+# === ARQUIVOS DE SISTEMA / IDE ===
+.vscode/
+.DS_Store
