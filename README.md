@@ -10,7 +10,8 @@ Uma rede social especializada para conectar clientes, artistas tatuadores e est�
 - [Regras de Negócio (RN)](#-regras-de-negócio-rn)
 - [Funcionalidades e Interações](#-funcionalidades-e-interações)
 - [Segurança e Moderação](#-segurança-e-moderação)
-- [Tecnologias](#-tecnologias)
+- [Ajustes Realizados a partir dos feedbacks](#-ajustes-realizados)
+- [Como Executar o Projeto Localmente](#-instruções-básicas-execução)
 
 ---
 
@@ -75,6 +76,7 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 * **Remoção de pastas e arquivos do repositório** (`.env`, `banco.db` e `__pycache__`.)
 * **Definir um fluxo principal pequeno e funcional** (`Apresentado no Documento_Negocio_InkUtopia`)
 * **Exposição de uma documentação técnica**
+* **Instruções de Execução Básicas**
 
 
 ---
