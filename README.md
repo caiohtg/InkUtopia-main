@@ -73,7 +73,8 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 
 ## 🚀 Ajustes Realizados a partir dos feedbacks 
 * **Remoção de pastas e arquivos do repositório** (`.env`, `banco.db` e `__pycache__`.)
-* **
+* **Definir um fluxo principal pequeno e funcional** (`Apresentado no Documento_Negocio_InkUtopia`)
+* **Exposição de uma documentação técnica**
 
 
 ---
@@ -84,3 +85,30 @@ A plataforma funciona como um ecossistema completo para o mundo da tatuagem, per
 =======
 * **Back-End:** Flask Python
 
+=======
+* **Front-End:** HTML5, CSS3, JavaScript
+---
+
+## ---
+
+## 🚀 Como Executar o Projeto Localmente
+
+Siga os passos abaixo para configurar o ambiente e rodar o InkUtopia na sua máquina.
+
+### 1. Pré-requisitos
+Certifique-se de ter instalado em seu computador:
+* **Python 3.x**
+* **PostgreSQL** (com um banco de dados criado para o projeto)
+
+### 2. Clonar o Repositório
+Se for a primeira vez baixando o projeto nesta máquina:
+```bash
+git clone [https://github.com/caiohtg/InkUtopia-main.git](https://github.com/caiohtg/InkUtopia-main.git)
+cd InkUtopia-main
+```
+
+### 3. Instale as bibliotecas necessárias do Flask e do banco de dados
+``pip install flask psycopg2 werkzeug``
+
+### 4. Executar a Aplicação
+``py app.py``
