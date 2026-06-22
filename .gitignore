@@ -11,3 +11,6 @@ instance/
 # === ARQUIVOS DE SISTEMA / IDE ===
 .vscode/
 .DS_Store
+
+# Ignorar fotos enviadas por usuários/artistas
+static/img/avatar/
