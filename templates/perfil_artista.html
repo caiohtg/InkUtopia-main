@@ -6,17 +6,15 @@
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-        <main>
+    <main>
         <header class="site-header">
             <div class="header-container">
-                <!-- Logo do lado esquerdo -->
                 <div class="logo">
                     <a href="/">
                         <img src="../static/img/inkutopia_logo.png" alt="Logo do Site" width="150">
                     </a>
                 </div>
         
-                <!-- Navegação central -->
                 <nav class="main-navigation">
                     <ul>
                         <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -26,179 +24,212 @@
                     </ul>
                 </nav>
         
-                <!-- Lado direito com pesquisa e navegação adicional -->
                 <div class="header-right">
-                    <!-- Navigation bar do lado direito -->
                     <nav class="right-navigation">
                         <ul>
-                            <!-- <li><a href="../templates/login.html" class="nav-entrar-button">Entrar</a></li> -->
                             <li><a href="{{ url_for('home') }}" style="color: black;">Voltar para Home</a></li> 
                         </ul>
                     </nav>
                 </div>
             </div>
         </header><br>
+        
         <div class="perfil-wrapper" style="padding-top: 80px;">
-        <div class="profile-card artist-card">
-            <div class="profile-header">
-                <span class="badge-artista">{{ usuario.tipo }}</span>
-                <h2>Artista: {{ usuario.nome }}</h2>
-            </div>
+            <div class="profile-card artist-card">
+                <div class="profile-header" style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+                    <!-- Foto de Perfil Redonda e Centralizada -->
+                    <div class="profile-avatar-container" style="margin-bottom: 15px;">
+                        {% if usuario.foto_perfil %}
+                            <img src="{{ url_for('static', filename=usuario.foto_perfil) }}" alt="Foto de Perfil" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #000000; display: block;">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/avatar/default-avatar-profile-icon-social-media-user-free-vector.webp') }}" alt="Foto Padrão" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #000000; display: block;">
+                        {% endif %}
+                    </div>
 
-            <div class="profile-info">
-                <div class="info-group">
-                    <label>E-mail Profissional</label>
-                    <p>{{ usuario.email }}</p>
+                    <span class="badge-artista" style="margin-bottom: 5px;">{{ usuario.tipo }}</span>
+                    <h2 style="color: #000000; margin: 0;">{{ usuario.nome }}</h2>
                 </div>
-                
-                <div class="info-group">
-                    <label>Telefone de Contato</label>
-                    <p>{{ usuario.telefone }}</p>
-                </div>
-            </div>
 
-<div class="artist-tools">
-    <h3>Gerenciamento</h3>
-    <div class="tools-grid">
-        <a href="#form-portfolio" class="tool-btn"><i>🎨</i> Novo Portfólio</a>
-        <a href="#" class="tool-btn"><i>📅</i> Verificar Agenda</a>
-        <a style="color: #000000; font-weight: bold; text-decoration: none;" href="{{ url_for('exibir_editar_perfil')}}">⚙️ Editar Meus Dados</a>
-    </div>
-</div>
-
-<div class="portfolio-section" style="margin-top: 30px; text-align: left;">
-    <h3 style="color: #9b59b6; margin-bottom: 15px; border-bottom: 2px solid #f5eef8; padding-bottom: 5px;">🖼️ Meu Portfólio</h3>
-    
-    {% if artes %}
-        <div class="portfolio-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            {% for arte in artes %}
-                <div class="arte-card" style="background: #fdfaff; border: 1px solid #e8daef; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+                <div class="profile-info" style="text-align: left; margin-bottom: 20px;">
+                    <div class="info-group" style="margin-bottom: 10px;">
+                        <h3 style="color: #000000; margin-bottom: 10px;">Contato</h3>
+                        <p style="margin: 0; color: #000000; font-size: 1rem;">
+                            <strong style="font-weight: bold;">E-mail Profissional:</strong> {{ usuario.email }}
+                        </p>
+                    </div>
                     
-                    <div>
-                        <img src="{{ url_for('static', filename=arte.url) }}" alt="{{ arte.titulo }}" style="width: 100%; height: 180px; object-fit: cover; display: block;">
-                        
-                        <div style="padding: 10px;">
-                            <h4 style="margin: 0 0 5px 0; color: #2c3e50; font-size: 1rem;">{{ arte.titulo }}</h4>
-                            
-                            {% if arte.descricao %}
-                                <p style="margin: 0 0 8px 0; color: #7f8c8d; font-size: 0.85rem; line-height: 1.3;">{{ arte.descricao }}</p>
-                            {% endif %}
-                            
-                            {% if arte.preco %}
-                                <span style="display: inline-block; background: #e8daef; color: #9b59b6; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
-                                    R$ {{ "%.2f"|format(arte.preco) }}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div style="padding: 0 10px 10px 10px; display: flex; gap: 8px;">
-                        <button type="button" 
-                                onclick="abrirModalEditar('{{ arte.id }}', '{{ arte.titulo|escape }}', '{{ arte.descricao|escape }}', '{{ arte.preco or '' }}')" 
-                                style="flex: 1; background: #fff; border: 1px solid #9b59b6; color: #9b59b6; padding: 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                            <i class="fas fa-edit"></i> Editar
-                        </button>
-                        
-                        <form action="{{ url_for('deletar_postagem', id_postagem=arte.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta arte do seu portfólio?');" style="flex: 1; display: flex;">
-                            <button type="submit" 
-                                    style="width: 100%; background: #e74c3c; border: none; color: #fff; padding: 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                                <i class="fas fa-trash-alt"></i> Excluir
-                            </button>
-                        </form>
+                    <div class="info-group">
+                        <p style="margin: 0; color: #000000; font-size: 1rem;">
+                            <strong style="font-weight: bold;">Telefone de Contato:</strong> {{ usuario.telefone }}
+                        </p>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p style="color: #95a5a6; font-style: italic; font-size: 0.9rem;">Você ainda não adicionou nenhuma foto ao seu portfólio.</p>
-    {% endif %}
-</div>
 
-<div id="form-portfolio" style="margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: left;">
-    <h3 style="color: #9b59b6; margin-bottom: 15px; border-bottom: 2px solid #f5eef8; padding-bottom: 5px;">🎨 Adicionar Nova Arte ao Portfólio</h3>
-    
-    <form action="{{ url_for('novo_portfolio') }}" method="POST" enctype="multipart/form-data">
-        
-        <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom:5px; font-weight:500; color: #34495e;">Título da Obra</label>
-            <input type="text" name="titulo" required placeholder="Ex: Tatuagem Leão Realista" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px; box-sizing: border-box;">
-        </div>
+                <div class="artist-tools" style="margin: auto; display: inline-block;">
+                    <h3 style="margin-bottom: 30px;">Gerenciamento</h3>
+                    <div class="tools-grid" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <a href="javascript:void(0);" onclick="alternarFormularioPortfolio()" class="tool-btn" style="background: #000000; color: #ffffff; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;"> Novo Portfólio</a>
+                        <a class="tool-btn" style="background: #000000; color: #ffffff; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;" href="{{ url_for('exibir_editar_perfil')}}">⚙️ Editar Meus Dados</a>
+                        <a href="javascript:void(0);" onclick="toggleFormFoto()" class="tool-btn" style="background: #000000; color: #ffffff; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">📷 Alterar Foto</a>
+                    </div>
+                </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom:5px; font-weight:500; color: #34495e;">Preço Estimado (R$ - Opcional)</label>
-            <input type="number" step="0.01" name="preco_estimado" placeholder="Ex: 450.00" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px; box-sizing: border-box;">
-        </div>
+                <!-- Formulário Minimalista para Alterar Foto de Perfil (Inicia Escondido) -->
+                <div id="secao-alterar-foto" class="change-avatar-section" style="display: none; margin-top: 15px; padding: 15px; border: 1px solid #333333; border-radius: 5px; background: #ffffff; text-align: left; max-width: 400px;">
+                    <h4 style="margin: 0 0 10px 0; color: #000000; font-size: 0.95rem;">📷 Selecione a nova foto de perfil</h4>
+                    <form action="{{ url_for('atualizar_foto_perfil') }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="file" name="foto_perfil" accept="image/*" required style="font-size: 0.85rem; color: #000000;">
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" style="background: #000000; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; width: fit-content;">
+                                Atualizar Foto
+                            </button>
+                            <button type="button" onclick="toggleFormFoto()" style="background: #ffffff; color: #000000; border: 1px solid #333333; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom:5px; font-weight:500; color: #34495e;">Descrição / Detalhes</label>
-            <textarea name="descricao" rows="4" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px; resize:none; box-sizing: border-box;" placeholder="Conte detalhes sobre a sessão, agulhas usadas, estilo ou inspiração..."></textarea>
-        </div>
+                <div id="form-portfolio" style="display: none; margin-top: 30px; background: #ffffff; padding: 20px; border: 1px solid #333333; border-radius: 8px; text-align: left;">
+                    <h3 style="color: #000000; margin-bottom: 15px; border-bottom: 2px solid #333333; padding-bottom: 5px;">🎨 Adicionar Nova Arte ao Portfólio</h3>
+                    
+                    <form action="{{ url_for('novo_portfolio') }}" method="POST" enctype="multipart/form-data">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display:block; margin-bottom:5px; font-weight:500; color: #000000;">Título da Obra</label>
+                            <input type="text" name="titulo" required placeholder="Ex: Tatuagem Leão Realista" style="width:100%; padding:10px; border:1px solid #333333; border-radius:5px; box-sizing: border-box; background: #ffffff; color: #000000;">
+                        </div>
 
-        <div style="margin-bottom: 25px; background: #fdfaff; padding: 15px; border: 1px dashed #9b59b6; border-radius: 6px;">
-            <label style="display:block; margin-bottom:8px; font-weight:bold; color: #9b59b6;">Foto do Trabalho (Imagem)</label>
-            <input type="file" name="imagem" accept="image/*" required style="font-size: 0.9rem;">
-            <small style="display:block; color: #7f8c8d; margin-top: 5px;">Formatos aceitos: JPG, JPEG, PNG ou GIF.</small>
-        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display:block; margin-bottom:5px; font-weight:500; color: #000000;">Preço Estimado (R$ - Opcional)</label>
+                            <input type="number" step="0.01" name="preco_estimado" placeholder="Ex: 450.00" style="width:100%; padding:10px; border:1px solid #333333; border-radius:5px; box-sizing: border-box; background: #ffffff; color: #000000;">
+                        </div>
 
-        <button type="submit" style="background:#9b59b6; color:white; border:none; padding:12px 20px; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; transition: background 0.2s;">
-            🚀 Publicar no Portfólio
-        </button>
-    </form>
-</div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display:block; margin-bottom:5px; font-weight:500; color: #000000;">Descrição / Detalhes</label>
+                            <textarea name="descricao" rows="4" style="width:100%; padding:10px; border:1px solid #333333; border-radius:5px; resize:none; box-sizing: border-box; background: #ffffff; color: #000000;" placeholder="Conte detalhes sobre a sessão, agulhas usadas, estilo ou inspiração..."></textarea>
+                        </div>
 
-            <div class="profile-actions">
-                <a href="#" class="btn-edit-artist">Editar Perfil Artístico</a>
-                <a href="{{ url_for('home') }}" class="btn-back">Voltar para Home</a>
+                        <div style="margin-bottom: 25px; background: #ffffff; padding: 15px; border: 1px dashed #333333; border-radius: 6px;">
+                            <label style="display:block; margin-bottom:8px; font-weight:bold; color: #000000;">Foto do Trabalho (Imagem)</label>
+                            <input type="file" name="imagem" accept="image/*" required style="font-size: 0.9rem; color: #000000;">
+                            <small style="display:block; color: #555555; margin-top: 5px;">Formatos aceitos: JPG, JPEG, PNG ou GIF.</small>
+                        </div>
+
+                        <button type="submit" style="background: #000000; color: #ffffff; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: background 0.2s;">
+                            🚀 Publicar no Portfólio
+                        </button>
+                    </form>
+                </div>
+
+                <div class="portfolio-section" style="margin-top: 30px; text-align: left;">
+                    <h3 style="color: #000000; margin-bottom: 15px; border-bottom: 2px solid #333333; padding-bottom: 5px;">🖼️ Meu Portfólio</h3>
+                    
+                    {% if artes %}
+                        <div class="portfolio-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            {% for arte in artes %}
+                                <div class="arte-card" style="background: #ffffff; border: 1px solid #333333; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <img src="{{ url_for('static', filename=arte.url) }}" alt="{{ arte.titulo }}" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                                        
+                                        <div style="padding: 10px;">
+                                            <h4 style="margin: 0 0 5px 0; color: #000000; font-size: 1rem;">{{ arte.titulo }}</h4>
+                                            
+                                            {% if arte.descricao %}
+                                                <p style="margin: 0 0 8px 0; color: #555555; font-size: 0.85rem; line-height: 1.3;">{{ arte.descricao }}</p>
+                                            {% endif %}
+                                            
+                                            {% if arte.preco %}
+                                                <span style="display: inline-block; background: #000000; color: #ffffff; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
+                                                    R$ {{ "%.2f"|format(arte.preco) }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div style="padding: 0 10px 10px 10px; display: flex; gap: 8px;">
+                                        <button type="button" 
+                                                onclick="abrirModalEditar('{{ arte.id }}', '{{ arte.titulo|escape }}', '{{ arte.descricao|escape }}', '{{ arte.preco or '' }}')" 
+                                                style="flex: 1; background: #ffffff; border: 1px solid #000000; color: #000000; padding: 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        
+                                        <form action="{{ url_for('deletar_postagem', id_postagem=arte.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta arte do seu portfólio?');" style="flex: 1; display: flex;">
+                                            <button type="submit" 
+                                                    style="width: 100%; background: #ececec; border: 1px solid #333333; color: #000000; padding: 6px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                                <i class="fas fa-trash-alt"></i> Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p style="color: #555555; font-style: italic; font-size: 0.9rem;">Você ainda não adicionou nenhuma foto ao seu portfólio.</p>
+                    {% endif %}
+                </div>
+
+                <div class="test-zone">
+                    <hr style="border: 0; border-top: 1px solid #333333;">
+                    <a href="{{ url_for('logout') }}" class="btn-logout-test">
+                        🚪 Sair da Conta (Logout)
+                    </a>
+                </div>
             </div>
-
-                        <div class="profile-actions">
-                <a href="#" class="btn-edit">Editar Meus Dados</a>
-                <a href="{{ url_for('home') }}" style="color: #95a5a6; text-decoration: none; font-size: 0.9rem;">Voltar para Home</a>
-            </div>
-
-            <div class="test-zone">
-                <hr>
-                <a href="{{ url_for('logout') }}" class="btn-logout-test">
-                    🚪 Sair da Conta (Logout)
-                </a>
         </div>
-    </div>
-    <div id="modalEditar" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
-    <div class="modal-conteudo" style="background: #ffffff; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; border: 1px solid #333;">
-        <h2 style="color: #000000; margin-bottom: 15px;">Editar Arte</h2>
-        
-        <form id="formEditarPostagem" method="POST" action="">
-            <label style="color: #000000; display:block; margin-bottom: 5px;">Título</label>
-            <input type="text" id="editarTitulo" name="titulo" required style="width: 100%; padding: 8px; margin-bottom: 15px; background: #dadada5e; border: 1px solid #444; color: #000000;">
 
-            <label style="color: #000000; display:block; margin-bottom: 5px;">Descrição</label>
-            <textarea id="editarDescricao" name="descricao" rows="3" style="width: 100%; padding: 8px; margin-bottom: 15px; background:  #dadada5e; border: 1px solid #444; color: #000000; resize: none;"></textarea>
+        <div id="modalEditar" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
+            <div class="modal-conteudo" style="background: #ffffff; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; border: 1px solid #333333;">
+                <h2 style="color: #000000; margin-bottom: 15px;">Editar Arte</h2>
+                
+                <form id="formEditarPostagem" method="POST" action="">
+                    <label style="color: #000000; display:block; margin-bottom: 5px;">Título</label>
+                    <input type="text" id="editarTitulo" name="titulo" required style="width: 100%; padding: 8px; margin-bottom: 15px; background: #dadada5e; border: 1px solid #333333; color: #000000;">
 
-            <label style="color: #000000; display:block; margin-bottom: 5px;">Preço Estimado (R$)</label>
-            <input type="number" step="0.01" id="editarPreco" name="preco" style="width: 100%; padding: 8px; margin-bottom: 20px; background:  #dadada5e; border: 1px solid #444; color: #000000;">
+                    <label style="color: #000000; display:block; margin-bottom: 5px;">Descrição</label>
+                    <textarea id="editarDescricao" name="descricao" rows="3" style="width: 100%; padding: 8px; margin-bottom: 15px; background: #dadada5e; border: 1px solid #333333; color: #000000; resize: none;"></textarea>
 
-            <div style="display: flex; justify-content: space-between;">
-                <button type="button" onclick="fecharModalEditar()" class="btn" style="background: #f52323; color: #fff; padding: 8px 15px;">Cancelar</button>
-                <button type="submit" class="btn" style="background: #000000; color: #fff; padding: 8px 15px;">Salvar Alterações</button>
+                    <label style="color: #000000; display:block; margin-bottom: 5px;">Preço Estimado (R$)</label>
+                    <input type="number" step="0.01" id="editarPreco" name="preco" style="width: 100%; padding: 8px; margin-bottom: 20px; background: #dadada5e; border: 1px solid #333333; color: #000000;">
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <button type="button" onclick="fecharModalEditar()" class="btn" style="background: #ffffff; color: #000000; border: 1px solid #333333; padding: 8px 15px; cursor: pointer; font-weight: bold;">Cancelar</button>
+                        <button type="submit" class="btn" style="background: #000000; color: #ffffff; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold;">Salvar Alterações</button>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
     </main>
+
 <script>
+function alternarFormularioPortfolio() {
+    const form = document.getElementById('form-portfolio');
+    if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+        form.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        form.style.display = 'none';
+    }
+}
+
+function toggleFormFoto() {
+    var form = document.getElementById("secao-alterar-foto");
+    if (form.style.display === "none") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
+}
+
 function abrirModalEditar(id, titulo, descricao, preco) {
     const modal = document.getElementById('modalEditar');
     const form = document.getElementById('formEditarPostagem');
     
-    // Atualiza dinamicamente a rota do formulário com o ID certo da postagem
     form.action = `/postagem/editar/${id}`;
     
-    // Preenche os campos do formulário com os valores atuais
     document.getElementById('editarTitulo').value = titulo;
     document.getElementById('editarDescricao').value = descricao;
     document.getElementById('editarPreco').value = preco;
     
-    // Mostra o modal na tela usando flexbox
     modal.style.display = 'flex';
 }
 

@@ -461,7 +461,7 @@
                         </div>
                         <p class="artist-description">${item.description || 'Sem descrição fornecida.'}</p>
                         <div class="artist-actions">
-                            <a href="${linkWhatsapp}" target="_blank" class="btn btn-primary" ${item.telefone ? '' : 'style="background-color: #bdc3c7; cursor: not-allowed;" onclick="alert(\'Artista sem telefone cadastrado\'); return false;"'}>
+                            <a href="${linkWhatsapp}" target="_blank" class="btn btn-primary" ${item.telefone ? '' : 'style="background-color: #black; cursor: not-allowed;" onclick="alert(\'Artista sem telefone cadastrado\'); return false;"'}>
                                 <i class="fab fa-whatsapp"></i> Orçamento
                             </a>
                             <a href="/artista/${item.artista_id}" class="btn btn-outline">Ver Perfil</a>
